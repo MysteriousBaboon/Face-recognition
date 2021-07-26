@@ -10,46 +10,49 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<img src="/static/temp.jpg">
+<img src="/static/temp/main.jpg">
 {% if humans %}
-
+<br>
     {% for i in humans %}
-
+        <img src="/static/temp/{{ i.name }}.jpg">
         <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseOne">
-                        {{ i.name }}
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <form>
-                        <label>
-                            <p>Nom:</p>
-                            <input type="text" name="name" value="{{ i.name }}">
-                        </label>
-                        <label>
-                            <p>Number of times caught on camera:</p>
-                            <input type="number" name="seen" value="{{ i.seen }}">
-                        </label>
-                        <label>
-                            <p>Number of violent accident registered:</p>
-                            <input type="number" name="violence" value="{{ i.violence }}">
-                        </label>
-                        <label>
-                            <p>Number of incident registered:</p>
-                            <input type="number" name="incident" value="{{ i.incident }}">
-                        </label>
-                        <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ i.person_ID }}">
+                            {{ i.name }}
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse{{i.person_ID }}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <form>
+                            <label>
+                                <p>Nom:</p>
+                                <input type="text" name="name" value="{{ i.name }}">
+                            </label>
+                            <br>
+                            <label>
+                                <p>Number of times caught on camera:</p>
+                                <input type="number" name="seen" value="{{ i.seen }}">
+                            </label>
+                            <br>
+                            <label>
+                                <p> Number of violent accident registered:</p>
+                                <input type="number" name="violence" value="{{ i.violence }}">
+                            </label>
+                            <br>
+                            <label>
+                                <p>Number of incident registered:</p>
+                                <input type="number" name="incident" value="{{ i.incident }}">
+                            </label>
+                            <hr>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
     {% endfor %}
     <input type="submit">
 

@@ -8,7 +8,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    """
+    main function that handle both the image submitting and the response
+    :return:
+    """
     if request.method == 'POST':
+        print(request.files['profile_pic'])
         file = request.files['profile_pic']
         ids = ml.facial_recognition(file)
         con = sqlite3.connect("../db.sqlite")
@@ -24,6 +29,7 @@ def home():
         parsed = json.loads(result)
         print(parsed)
         return render_template("response.html", humans=parsed)
+    # Return the template for image submitting
     elif request.method == 'GET':
         return render_template("home.html")
 

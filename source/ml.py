@@ -8,9 +8,15 @@ import sqlite3
 import time
 import random
 import string
+import os
+import shutil
 
 
 def facial_recognition(file):
+    shutil.rmtree("static/temp")
+    # Clean temp folder
+    os.mkdir("static/temp")
+
     con = sqlite3.connect("../db.sqlite")
     cursor = con.cursor()
 
@@ -40,6 +46,12 @@ def facial_recognition(file):
     face_ids = []
 
     for i, face_encoding in enumerate(face_encodings):
+        padding = 10
+
+        # Save the cropped picture of the specific unknown face
+        cropped_image = image[face_locations[i][0] - 10:face_locations[i][2] + 10,
+                              face_locations[i][3] - padding:face_locations[i][1] + 10]
+
         # See if the face is a match for the known face(s)
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
@@ -54,25 +66,21 @@ def facial_recognition(file):
             filename += random.choice(string.ascii_letters)
             filename += ".jpg"
 
-            padding = 10
-            # Save the cropped picture of the specific unknown face
-            cropped_image = image[face_locations[i][0] - 10:face_locations[i][2] + 10,
-                            face_locations[i][3] - padding:face_locations[i][1] + 10]
+            # Write to big DB
             cv2.imwrite(f"../dataset/{filename}", cropped_image)
+            result_str = ''.join(random.choice(string.digits) for i in range(5))
+            name = f"_{result_str}"
 
-            letters = string.digits
-            result_str = ''.join(random.choice(letters) for i in range(5))
-            placeholder_name = f"__{result_str}"
-
-            cursor.execute("""INSERT INTO Person (name, path) VALUES (? , ?)""", (placeholder_name, filename))
+            cursor.execute("""INSERT INTO Person (name, path) VALUES (? , ?)""", (name, filename))
             db_id = cursor.lastrowid
             cursor.execute("INSERT INTO Frequentation (person_ID,seen,violence,incident) VALUES (?, ?, ?,?)", (db_id, 3,
                                                                                                                0, 0))
             con.commit()
-            name = placeholder_name
 
         face_names.append(name)
         face_ids.append(db_id)
+        # Write to temp folder
+        cv2.imwrite(f"static/temp/{name}.jpg", cropped_image)
 
     # Display the results
 
@@ -87,5 +95,6 @@ def facial_recognition(file):
         cv2.putText(image, name, (left, bottom + 40), font, 1.0, (00, 00, 00), 5)
         cv2.putText(image, name, (left, bottom + 40), font, 1.0, (255, 255, 255), 2)
 
-    cv2.imwrite("static/temp.jpg", image)
+    cv2.imwrite("static/temp/main.jpg", image)
+
     return face_ids
