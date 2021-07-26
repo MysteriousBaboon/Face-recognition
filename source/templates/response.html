@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Response</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<img src="/static/temp.jpg">
+{% if humans %}
+
+    {% for i in humans %}
+
+        <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseOne">
+                        {{ i.name }}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <form>
+                        <label>
+                            <p>Nom:</p>
+                            <input type="text" name="name" value="{{ i.name }}">
+                        </label>
+                        <label>
+                            <p>Number of times caught on camera:</p>
+                            <input type="number" name="seen" value="{{ i.seen }}">
+                        </label>
+                        <label>
+                            <p>Number of violent accident registered:</p>
+                            <input type="number" name="violence" value="{{ i.violence }}">
+                        </label>
+                        <label>
+                            <p>Number of incident registered:</p>
+                            <input type="number" name="incident" value="{{ i.incident }}">
+                        </label>
+                        <hr>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    <input type="submit">
+
+{% endif %}
+</body>
+</html>
