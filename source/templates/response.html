@@ -12,21 +12,22 @@
 <body>
 <img src="/static/temp/main.jpg">
 {% if humans %}
-<br>
+    <br>
     {% for i in humans %}
         <img src="/static/temp/{{ i.name }}.jpg">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ i.person_ID }}">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse{{ i.person_ID }}">
                             {{ i.name }}
                         </a>
                     </h4>
                 </div>
-                <div id="collapse{{i.person_ID }}" class="panel-collapse collapse">
+                <div id="collapse{{ i.person_ID }}" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <form>
+                        <form onsubmit="sendData(this); return false;">
                             <label>
                                 <p>Nom:</p>
                                 <input type="text" name="name" value="{{ i.name }}">
@@ -48,14 +49,43 @@
                             </label>
                             <hr>
 
+                            <input type="submit">
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     {% endfor %}
-    <input type="submit">
 
 {% endif %}
+
+<script>
+    function sendData(form) {
+        let elements = form.elements;
+        let obj = new FormData();
+
+        for(let i = 0 ; i < elements.length ; i++)
+        {
+            let item = elements.item(i);
+
+
+            obj.append(item.name, item.value);
+        }
+        const XHR = new XMLHttpRequest();
+        // Define what happens in case of error
+        XHR.addEventListener("error", function (event) {
+            console.error('Oops! Something went wrong.');
+        });
+
+        // Set up our request
+        XHR.open("POST", "/test");
+        // The data sent is what the user provided in the form
+        XHR.send(obj);
+        return false
+    }
+    // ...and take over its submit event.
+
+</script>
 </body>
 </html>
