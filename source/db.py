@@ -1,11 +1,13 @@
 import sqlite3
 
-con = sqlite3.connect("db.sqlite")
+# Create database
+con = sqlite3.connect("../db.sqlite")
 cursor = con.cursor()
 
 cursor.execute("""CREATE TABLE Person (ID INTEGER PRIMARY KEY, name, path)""")
 cursor.execute("""CREATE TABLE Frequentation (person_ID, seen, violence, incident)""")
 
+# EXAMPLES of instances creations
 cursor.execute("""INSERT INTO Person (name,path) values ("Chris Hemsworth", "train/chris_hemsworth.jpg")""")
 cursor.execute("""INSERT INTO Person (name,path) values ("Jeremy Renner", "train/test_jeremy_renner.jpg")""")
 

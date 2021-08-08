@@ -28,6 +28,8 @@
                 <div id="collapse{{ i.person_ID }}" class="panel-collapse collapse">
                     <div class="panel-body">
                         <form onsubmit="sendData(this); return false;">
+                            <input type="hidden" name="id" value="{{ i.person_ID }}">
+
                             <label>
                                 <p>Nom:</p>
                                 <input type="text" name="name" value="{{ i.name }}">
@@ -79,7 +81,7 @@
         });
 
         // Set up our request
-        XHR.open("POST", "/test");
+        XHR.open("POST", "/update");
         // The data sent is what the user provided in the form
         XHR.send(obj);
         return false
