@@ -4,4 +4,3 @@
 
 dataset/*
 !dataset/train
-source/static/temp/*
