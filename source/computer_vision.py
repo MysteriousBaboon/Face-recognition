@@ -22,6 +22,7 @@ def process_image(file):
     # Delete the temp file and recreate it
     shutil.rmtree("static/temp")
     os.mkdir("static/temp")
+    open("static/temp/.temp", "w").write("")
 
     # Load the uploaded image desired by the user
     npimg = np.fromfile(file, np.uint8)
@@ -74,11 +75,11 @@ def process_image(file):
             db_id = known_face_ids[best_match_index]
         # Else generate a file name id_time.jpg
         else:
-            filename = f"{known_face_ids[best_match_index]}_{time.time_ns() * (i + 1)}.jpg"
+            filename = f"{known_face_ids[best_match_index]}_{time.time_ns()}.jpg"
             # Create the cropped image file
             cv2.imwrite(f"../dataset/{filename}", cropped_image)
             # Create a name to the unknown face
-            name = '_'.join(random.choice(string.digits) for i in range(5))
+            name = '_' + "".join(random.choice(string.digits) for i in range(7))
 
             # Insert into DB
             cursor.execute("INSERT INTO Person (name, path) VALUES (? , ?)", (name, filename))
