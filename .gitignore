@@ -4,5 +4,4 @@
 
 dataset/*
 !dataset/train
-/source/static/temp/
 /db.sqlite
