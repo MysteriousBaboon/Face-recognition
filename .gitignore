@@ -1,7 +1,6 @@
 /venv
 *.pyc
 /.idea
-source/static/temp
 
 dataset/*
 !dataset/train
