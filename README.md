@@ -4,7 +4,7 @@ This is a little web API/site written in [Flask](https://flask.palletsprojects.c
 
 ## **Getting Started**
 - Install [dlib](https://gist.github.com/ageitgey/629d75c1baac34dfa5ca2a1928a7aeaf)
-- Install requirements with ```python -r requirements.txt```
+- Install requirements with ```pip install -r requirements.txt```
 - Run the python script ```db.py``` in source to create the sqlite DB
 - Run the ```main.py script``` in source to launch the Flask app
 - Go to http://127.0.0.1:5000/ and upload a picture
