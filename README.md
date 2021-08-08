@@ -8,3 +8,6 @@ This is a little web API/site written in [Flask](https://flask.palletsprojects.c
 - Run the python script ```db.py``` in source to create the sqlite DB
 - Run the ```main.py script``` in source to launch the Flask app
 - Go to http://127.0.0.1:5000/ and upload a picture
+
+## **Troubleshoot**
+If you have an error with cblas try to install dlib==19.15.0 or look at https://github.com/ageitgey/face_recognition/issues/731
